@@ -3,7 +3,10 @@ import streamlit as st
 st.title("こんにちわ、吉村ゼミ")
 
 name = st.test_input("好きな言葉を入力してください")
-st.write(name)     
+st.write(name) 
+
+st.checkbox("同意します") 
+st.selectbox("次の中から現住所を教えて",["京都府","大阪府"])
 
 camera_photo = st.camera_input("写真を撮影します")
 if camera:
