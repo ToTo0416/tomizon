@@ -6,7 +6,12 @@ name = st.test_input("好きな言葉を入力してください")
 st.write(name) 
 
 st.checkbox("同意します") 
-st.selectbox("次の中から現住所を教えて",["京都府","大阪府"])
+address = st.selectbox("次の中から現住所を教えて",["京都府","大阪府"])
+st.write(address)
+hobby = st.multiselect("趣味を次から選択して",["映画","音楽","散歩"])
+st.write(hobby)
+
+st.slider("この映画を10点満点で評価してください")
 
 camera_photo = st.camera_input("写真を撮影します")
 if camera:
