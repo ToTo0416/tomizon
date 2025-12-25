@@ -29,4 +29,4 @@ if st.button("判定する"):
 if st.button("リセット"):
     st.session_state.answer = random.randint(1, 100)
     st.session_state.message = "ゲームをリセットしました！"
-    st.experimental_rerun()
+    st.rerun()
