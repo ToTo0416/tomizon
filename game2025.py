@@ -22,7 +22,8 @@ if st.button("判定する"):
         st.session_state.message = "もっと小さい数字です"
     else:
         st.session_state.message = "🎉 正解！ゲームクリア！"
-    st.experimental_rerun()
+    st.rerun()
+
 
 # リセットボタン
 if st.button("リセット"):
