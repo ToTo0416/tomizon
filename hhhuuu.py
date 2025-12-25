@@ -1,4 +1,4 @@
-@@ -1,177 +1,207 @@
+
 import streamlit as st
 import random
 from PIL import Image, ImageDraw
