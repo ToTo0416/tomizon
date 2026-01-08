@@ -49,24 +49,27 @@ COLOR_RGB = {
 # 2. User Input
 # -----------------------------
 
-st.header("1️⃣ Rate Your Style Preference (0–5)")
+st.header("1️⃣ スタイルの好みを 0〜5 で評価")
 
 genre_scores = {}
 for g in GENRES:
     genre_scores[g] = st.slider(g, 0, 5, 0)
 
-st.header("2️⃣ Rate Your Color Preference (0–5)")
+st.header("2️⃣ 色の好みを 0〜5 で評価")
 
 color_scores = {}
 for c in COLORS:
     color_scores[c] = st.slider(c, 0, 5, 0)
 
 # -----------------------------
-# 3. Score Completion (0 は補完しない)
+# 3. Score Completion
+#    → 全部0ならデフォルト値を入れる（推薦されない問題の解決）
 # -----------------------------
 
 def complete_scores(scores: dict):
-    return scores  # 0 はそのまま扱う
+    if all(v == 0 for v in scores.values()):
+        return {k: 3 for k in scores}  # デフォルト値
+    return scores
 
 genre_scores = complete_scores(genre_scores)
 color_scores = complete_scores(color_scores)
@@ -219,4 +222,34 @@ for i, genre in enumerate(top_genres):
     color = random.choice(top_colors)
 
     if color in used_colors and len(top_colors) > 1:
-        color = random.choice
+        color = random.choice([c for c in top_colors if c not in used_colors])
+
+    used_colors.append(color)
+
+    outfit = generate_outfit(genre, color)
+    img = generate_image(outfit, gender)
+
+    col1, col2 = st.columns([1, 1.5])
+
+    with col1:
+        st.image(img, caption=f"Outfit {i+1}")
+
+    with col2:
+        st.subheader(f"Outfit {i+1} Details")
+        st.write(f"**Genre:** {outfit['Genre']}")
+        st.write(f"**Color Theme:** {outfit['Color Theme']}")
+        st.write(f"👕 Inner: {outfit['Inner']}")
+        st.write(f"🧥 Outer: {outfit['Outer']}")
+        st.write(f"👖 Bottom: {outfit['Bottom']}")
+
+# -----------------------------
+# 9. Display Final Scores
+# -----------------------------
+
+st.header("📊 Final Recommendation Scores")
+
+st.subheader("Genre Scores")
+st.json(genre_scores)
+
+st.subheader("Color Scores")
+st.json(color_scores)
